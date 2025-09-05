@@ -18,8 +18,8 @@ while theta < 360:
 	theta += 1
 
 	#plt.figure()
-	plt.stem(theta, x)
-	#plt.stem(theta,y)
+	plt.plot(theta, x, marker = '*', color = 'red')
+	plt.plot(theta,y, marker = 'x', color = 'green')
 	plt.pause(.0001)
 
 plt.show()

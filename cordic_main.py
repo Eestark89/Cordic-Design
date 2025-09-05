@@ -36,7 +36,7 @@ def cordic(n, theta):
 		if (abs(theta) > 100 and theta_diff > 11 and theta_diff <= 190 and quad_check_flag == 0):
 			theta = abs(90 - theta_diff)    #remap the angle onto quadrant 1
 			quad_check_flag = 1
-		elif(theta_diff > 190 and  quad_check_flag == 0):
+		elif(theta_diff > 180 and  quad_check_flag == 0):
 			theta = 360 - theta
 			quad_check_flag = 1
 
@@ -59,17 +59,18 @@ def cordic(n, theta):
 			y_old[0] = y_old[1] + (sign * 2**(-i) * x_old[1])
 			#print(x_old[0] )
 
-	if (theta_diff >= 11 and theta_diff <= 89):
-		quad_sign_x = -1
+	if (theta_diff >= 12 and theta_diff <= 89):
+		quad_sign_x = -1							#<====   quadrant two
 		quad_sign_y =  1
-	elif (theta_diff >= 90 and theta_diff <= 179):
-		quad_sign_x = -1
+	elif (theta_diff >= 90 and theta_diff <= 190):  #Since the arctan(2^-i) LUT only reaches +/- 100 degrees we have to let our boundaries overlap
+													#in the 3rd and 4th quadrant. Otherwise we get flipped values for X
+		quad_sign_x = -1							#<====   quadrant three
 		quad_sign_y =  -1 
-	elif (theta_diff >= 180 and theta_diff <= 269):
-		quad_sign_x = 1
+	elif (theta_diff > 190 and theta_diff <= 269):
+		quad_sign_x = 1								#<====   quadrant four
 		quad_sign_y = -1
 	else:
-		quad_sign_x = 1
+		quad_sign_x = 1								#<====   quadrant one
 		quad_sign_y =  1 
 
 
